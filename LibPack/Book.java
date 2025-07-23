@@ -45,5 +45,37 @@ public class Book {
         quantity++;
     }
 
-    
+    @Override
+    public String toString(){
+        return "\nTitle : " + title +
+                "\n ISBN : " + isbn +
+                "\n Quantity : " + quantity + 
+                "\n Cost : ₹" + cost + 
+                "\n Times Borrowed : " + timesBorrowed;
+    }
+
+    public String getAsRow(){
+        return title + "   " + isbn + "   " + quantity + "   ₹" + cost + "   " + timesBorrowed ;
+    }
+
+
+    public String getTitle(){
+        return this.title;
+    }
+
+    public String getISBN(){
+        return this.isbn;
+    }
+
+    public int getQuantity(){
+        return this.quantity;
+    }
+
+    public double getCost(){
+        return this.cost;
+    }
+
+    public int getTimesBorrowed(){
+        return this.timesBorrowed;
+    }
 }
