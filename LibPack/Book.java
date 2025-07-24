@@ -32,7 +32,7 @@ public class Book {
         return quantity>0;
     }
 
-    public boolean borrowBook(String email){
+    public boolean borrowBook(){
         if(isAvailable()){
             quantity--;
             timesBorrowed++;

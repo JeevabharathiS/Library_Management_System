@@ -39,6 +39,32 @@ public class Borrower extends User{
                 case 2:
                     borrowBook();
                     break;
+
+                case 3:
+                    System.out.print("Enter the Book's ISBN to return : ");
+                    String r_isbn = sc.nextLine();
+                    returnBook(r_isbn);
+                    break;
+
+                case 4: 
+                    System.out.print("Enter the Book's ISBN : ");
+                    String e_isbn = sc.nextLine();
+                    extendTenure(e_isbn);
+                    break;
+
+                case 5:
+                    System.out.print("Enter the Book's ISBN : ");
+                    String l_isbn = sc.nextLine();
+                    markBookAsLost(l_isbn);
+                    break;
+
+                case 6:
+                    membershipCardLost();
+                    break;
+
+                case 7:
+                    viewBorrowedBooks();
+                    break;
             
                 default:
                     break;
@@ -80,7 +106,7 @@ public class Borrower extends User{
             return;
         }
 
-        boolean success = book.borrowBook(email);
+        boolean success = book.borrowBook();
         if (success) {
             BorrowedBook record = new BorrowedBook(book, new Date());
             borrowedBooks.put(isbn, record);
@@ -88,6 +114,82 @@ public class Borrower extends User{
             System.out.println("Book borrowed successfully.");
         }
     }
+
+    public void returnBook(String isbn){
+        BorrowedBook bb = borrowedBooks.get(isbn);
+        if(bb == null){
+            System.out.println("You Haven't Borrowed that Book");
+            return;
+        }
+        else{
+            borrowedBooks.remove(isbn);
+            Book book = bb.getBook();
+            book.returnBook();
+            System.out.println("Book returned Successfully.");
+        }
+    }
+
+    public void extendTenure(String isbn){
+        BorrowedBook bb = borrowedBooks.get(isbn);
+        if(bb == null){
+            System.out.println("You Haven't Borrowed that Book.");
+            return;
+        }else{
+            if(bb.getExtensionCount() >= 2){
+                System.out.println("You Have Reached the Maximum Tensure-Extension Limit.");
+                return;
+            }else{
+                bb.incrementExtension();
+                System.out.println("Tenure Extended Successfully.");
+            }
+        }
+    }
+
+    public void markBookAsLost(String isbn){
+        BorrowedBook bb = borrowedBooks.get(isbn);
+        if(bb == null){
+            System.out.println("You Haven't Borrowed that Book.");
+            return;
+        }else{
+            Book book = bb.getBook();
+            double fine = book.getCost() * 0.5;
+            System.out.println("The Book is Marked as Lost. Fine : ₹"+ fine);
+            detuctFineFromDeposit(fine);
+            borrowedBooks.remove(isbn);
+        }
+    }
+
+    public void detuctFineFromDeposit(double amount){
+        if(deposit >= amount){
+            deposit -= amount;
+        }else{
+            System.out.println("You have Insufficient Deposit. You need to pay the Remaining of ₹" + (amount - deposit));
+            deposit = 0;
+            return;
+        }
+    }
+
+    public void membershipCardLost(){
+        System.out.println("Reported that you have Lost Membership Card. You need to pay the fine of ₹10");
+        detuctFineFromDeposit(10.0);
+        return;
+    }
+
+    public void viewBorrowedBooks(){
+        List<BorrowedBook> bbs = new ArrayList<>(borrowedBooks.values());
+        System.out.println("----- Available Books -----");
+        for(BorrowedBook bb: bbs){
+            System.out.println(bb.toString());
+        }
+    }
+
+
+
+
+
+
+
+
 
 
 
