@@ -97,6 +97,7 @@ public class Admin extends User {
                     break;
 
                 case 0:
+                    System.out.println("Logging Out...");
                     return;
 
                 default:

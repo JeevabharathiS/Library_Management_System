@@ -1,4 +1,5 @@
 package LibPack;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Borrower extends User{
@@ -65,6 +66,10 @@ public class Borrower extends User{
                 case 7:
                     viewBorrowedBooks();
                     break;
+
+                case 0:
+                    System.out.println("Logging Out...");
+                    return;
             
                 default:
                     break;
@@ -122,9 +127,21 @@ public class Borrower extends User{
             return;
         }
         else{
-            borrowedBooks.remove(isbn);
+            
             Book book = bb.getBook();
+            
+            Date returnDate = Utils.getValidDate(sc, "Enter Return Date (DD/MM/YYYY): ");
+            // SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date borrowedDate = bb.getBorrowDate();
+
+            double fine = FineCalc.calcFine(book, borrowedDate, returnDate);
+            if(fine>0){
+                System.out.println("Late return fine: ₹" + fine);
+                deductFineFromDeposit(fine);
+            }
+
             book.returnBook();
+            borrowedBooks.remove(isbn);
             System.out.println("Book returned Successfully.");
         }
     }
@@ -154,12 +171,12 @@ public class Borrower extends User{
             Book book = bb.getBook();
             double fine = book.getCost() * 0.5;
             System.out.println("The Book is Marked as Lost. Fine : ₹"+ fine);
-            detuctFineFromDeposit(fine);
+            deductFineFromDeposit(fine);
             borrowedBooks.remove(isbn);
         }
     }
 
-    public void detuctFineFromDeposit(double amount){
+    public void deductFineFromDeposit(double amount){
         if(deposit >= amount){
             deposit -= amount;
         }else{
@@ -171,7 +188,7 @@ public class Borrower extends User{
 
     public void membershipCardLost(){
         System.out.println("Reported that you have Lost Membership Card. You need to pay the fine of ₹10");
-        detuctFineFromDeposit(10.0);
+        deductFineFromDeposit(10.0);
         return;
     }
 
