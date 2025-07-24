@@ -24,6 +24,11 @@ public class Admin extends User {
             System.out.println("7. View Book by ISBN");
             System.out.println("8. Add Borrower");
             System.out.println("9. Add Admin");
+            System.out.println("10. View Books with Low Stock");
+            System.out.println("11. View Books That Never Borrowed");
+            System.out.println("12. View Heavily Borrowed Books");
+            System.out.println("13. View Borrowers with Overdue");
+            System.out.println("14. View Book Status by ISBN");
             System.out.println("0. Log Out");
             
             int choice = sc.nextInt();
@@ -94,6 +99,33 @@ public class Admin extends User {
                     System.out.print("Enter Password : ");
                     String a_password = sc.nextLine();
                     addAdmin(new Admin(a_name, a_mail, a_password, library));
+                    break;
+                
+                case 10:
+                    System.out.print("Enter the Threshold Value : ");
+                    int threshold = sc.nextInt();
+                    ReportGenerator.booksWithLowStock(library, threshold);
+                    break;
+
+                case 11:
+                    ReportGenerator.bookNeverBorrowed(library);
+                    break;
+                
+                case 12:
+                    System.out.print("Enter the Threshold Value : ");
+                    int thresh= sc.nextInt();
+                    ReportGenerator.heavilyBorrowedBooks(library, thresh);
+                    break;
+                
+                case 13:
+                    Date date = Utils.getValidDate(sc, "Enter date to Check Overdue (DD/MM/YYYY) : ");
+                    ReportGenerator.borrowersWithOverdue(library, date);
+                    break;
+                
+                case 14:
+                    System.out.print("Enter ISBN : ");
+                    String isbn_status = sc.nextLine();
+                    ReportGenerator.bookStatusByISBN(library, isbn_status);
                     break;
 
                 case 0:

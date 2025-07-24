@@ -70,4 +70,8 @@ public class Library {
     public List<Book> getBorrowedHistory(String email){
         return borrowRecords.getOrDefault(email, new ArrayList<>());
     }
+
+    public List<User> getAllUsers(){
+        return (new ArrayList<>(users.values()));
+    }
 }
