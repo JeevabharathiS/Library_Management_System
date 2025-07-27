@@ -25,5 +25,49 @@ public class Utils {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(date);
     } 
+
+    public static String getValidString(Scanner sc, String prompt){
+        while(true){
+            try{
+                System.out.print(prompt);
+                String input = sc.nextLine();
+                return input;
+            } catch(Exception e){
+                System.out.println("Invalid Data Type. Please Enter Correctly");
+            }
+        }
+    }
+
+    public static int getValidInteger(Scanner sc, String prompt){
+        while(true){
+            try{
+                System.out.print(prompt);
+                int input = sc.nextInt();
+                sc.nextLine();
+                return input;
+            }catch(Exception e){
+                System.out.println("Invalid Data Type. Please Enter Correctly");
+                sc.nextLine();
+            }
+        }
+    }
+
+    public static double getValidDouble(Scanner sc, String prompt){
+        while(true){
+            try{
+                System.out.print(prompt);
+                double input = sc.nextDouble();
+                sc.nextLine();
+                return input;
+            }catch(Exception e){
+                System.out.println("Invalid Data Type. Please Enter Correctly");
+                sc.nextLine();
+            }
+        }
+    }
+
+    
+
+
 }
 

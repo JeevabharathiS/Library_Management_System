@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 
 public class ReportGenerator {
     public static void booksWithLowStock(Library library, int threshold){
-        System.out.println("----- Books With Quantity Below "+ threshold +" -----");
+        System.out.println("----- Books With Quantity Below "+ threshold +" -----\n");
         for(Book b:library.getAllBooks()){
             if(b.getQuantity()<threshold){
                 System.out.println(b.getAsRow());
@@ -13,7 +13,7 @@ public class ReportGenerator {
     }
 
     public static void bookNeverBorrowed(Library library){
-        System.out.println("----- Books Never Borrowed -----");
+        System.out.println("----- Books Never Borrowed -----\n");
         for(Book b: library.getAllBooks()){
             if(b.getTimesBorrowed()==0){
                 System.out.println(b.getAsRow());
@@ -22,7 +22,7 @@ public class ReportGenerator {
     }
 
     public static void heavilyBorrowedBooks(Library library, int threshold){
-        System.out.println("----- Books Borrowed More Than "+ threshold +" Times -----");
+        System.out.println("----- Books Borrowed More Than "+ threshold +" Times -----\n");
         for(Book b:library.getAllBooks()){
             if(b.getTimesBorrowed()>threshold){
                 System.out.println(b.getAsRow());
@@ -31,7 +31,7 @@ public class ReportGenerator {
     }
 
     public static void borrowersWithOverdue(Library library, Date date){
-        System.out.println("Borrowers With Overdue Books (as of " + Utils.formatDate(date) + "):");
+        System.out.println("Borrowers With Overdue Books (as of " + Utils.formatDate(date) + ")\n");
 
         for(User user: library.getAllUsers()){
             if(user instanceof Borrower){
@@ -70,7 +70,7 @@ public class ReportGenerator {
             }
         }
 
-        if(!flag){
+        if(book.getQuantity()>0){
             System.out.println("Currently Available in Rack");
         }        
     }
@@ -80,7 +80,7 @@ public class ReportGenerator {
         if(history.isEmpty()){
             System.out.println("No Books Borrowed Yet");
         }else{
-            System.out.println("----- Previously Borrowed Books by "+br.getName()+" -----");
+            System.out.println("----- Previously Borrowed Books by "+br.getName()+" -----\n");
             for(Book b: history){
                 System.out.println(b.getAsRow());
             }
@@ -92,7 +92,7 @@ public class ReportGenerator {
         if(history.isEmpty()){
             System.out.println("No Fines Recorded");
         }else{
-            System.out.println("----- Fine History of "+br.getName()+" -----");
+            System.out.println("----- Fine History of "+br.getName()+" -----\n");
             for(FineRecord f: history){
                 System.out.println(f.getAsRow());
             }

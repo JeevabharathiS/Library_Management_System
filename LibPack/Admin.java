@@ -14,8 +14,9 @@ public class Admin extends User {
     public void showMenu(){
         Scanner sc = new Scanner(System.in);
         while(true){
+            System.out.println();
             System.out.println("===== Admin Menu =====");
-            System.out.println("1. Add Book");
+            System.out.println("\n1. Add Book");
             System.out.println("2. Modify Book");
             System.out.println("3. Delete Book");
             System.out.println("4. View Book by Title");
@@ -30,109 +31,107 @@ public class Admin extends User {
             System.out.println("13. View Borrowers with Overdue");
             System.out.println("14. View Book Status by ISBN");
             System.out.println("0. Log Out");
-            
-            int choice = sc.nextInt();
-            sc.nextLine();
+
+            System.out.println();
+            int choice = Utils.getValidInteger(sc, "Enter Your Choice : ");
 
             switch (choice) {
                 case 1:
-                    System.out.print("Enter the Title : ");
-                    String title = sc.nextLine();
-                    System.out.print("Enter the ISBN : ");
-                    String isbn = sc.nextLine();
-                    System.out.print("Enter the Quantity : ");
-                    int quantity = sc.nextInt();
-                    System.out.print("Enter the Cost : ");
-                    double cost = sc.nextDouble();
+                    System.out.println();
+                    String title = Utils.getValidString(sc, "Enter the Title : ");
+                    String isbn = Utils.getValidString(sc, "Enter the ISBN : ");
+                    int quantity = Utils.getValidInteger(sc, "Enter the Quantity : ");
+                    double cost = Utils.getValidDouble(sc, "Enter the Cost : ");
                     addBook(new Book(title, isbn, quantity, cost));
                     break;
                 
                 case 2:
-                    System.out.print("Enter ISBN : ");
-                    String mod_isbn = sc.nextLine();
-                    System.out.print("Enter New Quantity : ");
-                    int newQuantity = sc.nextInt();
-                    System.out.print("Enter New Cost : ");
-                    double newCost = sc.nextDouble();
+                    System.out.println();
+                    String mod_isbn = Utils.getValidString(sc, "Enter the ISBN : ");
+                    int newQuantity = Utils.getValidInteger(sc, "Enter New Quantity : ");
+                    double newCost = Utils.getValidDouble(sc, "Enter New Cost : ");
                     modifyBook(mod_isbn, newQuantity, newCost);
                     break; 
 
                 case 3:
-                    System.out.print("Enter ISBN : ");
-                    String delIsbn = sc.nextLine();
+                    System.out.println();
+                    String delIsbn = Utils.getValidString(sc, "Enter the ISBN : ");
                     deleteBook(delIsbn);
                     break;
                 
                 case 4:
+                    System.out.println();
                     viewBookByName();
                     break;
                 
                 case 5:
+                    System.out.println();
                     viewBookByQuantity();
                     break;
 
                 case 6:
-                    System.out.print("Enter Book Name : ");
-                    searchBookByName(sc.nextLine());
+                    System.out.println();
+                    String bookName = Utils.getValidString(sc, "Enter Book Name : ");
+                    searchBookByName(bookName);
                     break;
                 
                 case 7:
-                    System.out.print("Enter ISBN : ");
-                    searchBookByISBN(sc.nextLine());
+                    System.out.println();
+                    searchBookByISBN(Utils.getValidString(sc, "Enter the ISBN : "));
                     break;
                 
                 case 8: 
-                    System.out.print("Enter Borrower Name : ");
-                    String b_name = sc.nextLine();
-                    System.out.print("Enter Borrower Email : ");
-                    String b_mail = sc.nextLine();
-                    System.out.print("Enter Password : ");
-                    String b_password = sc.nextLine();
+                    System.out.println();
+                    String b_name = Utils.getValidString(sc, "Enter Borrower Name : ");
+                    String b_mail = Utils.getValidString(sc, "Enter Borrower Email : ");
+                    String b_password = Utils.getValidString(sc, "Enter Password : ");
                     addBorrower(new Borrower(b_name, b_mail, b_password, library));
                     break;
 
                 case 9:
-                    System.out.print("Enter Admin Name : ");
-                    String a_name = sc.nextLine();
-                    System.out.print("Enter Admin Email : ");
-                    String a_mail = sc.nextLine();
-                    System.out.print("Enter Password : ");
-                    String a_password = sc.nextLine();
+                    System.out.println();
+                    String a_name = Utils.getValidString(sc, "Enter Admin Name : ");
+                    String a_mail = Utils.getValidString(sc, "Enter Admin Email : ");
+                    String a_password = Utils.getValidString(sc, "Enter Password : ");
                     addAdmin(new Admin(a_name, a_mail, a_password, library));
                     break;
                 
                 case 10:
-                    System.out.print("Enter the Threshold Value : ");
-                    int threshold = sc.nextInt();
+                    System.out.println();
+                    int threshold = Utils.getValidInteger(sc, "Enter the Threshold Value : ");
                     ReportGenerator.booksWithLowStock(library, threshold);
                     break;
 
                 case 11:
+                    System.out.println();
                     ReportGenerator.bookNeverBorrowed(library);
                     break;
                 
                 case 12:
-                    System.out.print("Enter the Threshold Value : ");
-                    int thresh= sc.nextInt();
+                    System.out.println();
+                    int thresh= Utils.getValidInteger(sc, "Enter the Threshold Value : ");
                     ReportGenerator.heavilyBorrowedBooks(library, thresh);
                     break;
                 
                 case 13:
+                    System.out.println();
                     Date date = Utils.getValidDate(sc, "Enter date to Check Overdue (DD/MM/YYYY) : ");
                     ReportGenerator.borrowersWithOverdue(library, date);
                     break;
                 
                 case 14:
-                    System.out.print("Enter ISBN : ");
-                    String isbn_status = sc.nextLine();
+                    System.out.println();
+                    String isbn_status = Utils.getValidString(sc, "Enter the ISBN : ");
                     ReportGenerator.bookStatusByISBN(library, isbn_status);
                     break;
 
                 case 0:
+                    System.out.println();
                     System.out.println("Logging Out...");
                     return;
 
                 default:
+                    System.out.println();
                     System.out.println("Invalid Choice !");
             }
         }
